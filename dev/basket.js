@@ -22,6 +22,10 @@ module.exports = class Basket {
         }
     }
 
+    getProductArray(){
+        return this._basketData;
+    }
+
     sumAllProducts(){
         if(this._basketData != ""){
             this.allPcs = this._basketData.reduce((pv,nv)=>(
