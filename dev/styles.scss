@@ -1,3 +1,6 @@
+a:hover{
+    text-decoration: none;
+}
 header{
     margin-top: 50px;
     border-bottom: 1px solid #ddd;
@@ -16,6 +19,12 @@ header{
     }
     .link-special{
         color: red;
+        &:hover{
+            color: #b00;
+        }
+    }
+    .glyphicon{
+        font-size: 14px;
     }
 }
 .section-main{
