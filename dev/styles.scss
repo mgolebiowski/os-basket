@@ -1,0 +1,56 @@
+header{
+    margin-top: 50px;
+    border-bottom: 1px solid #ddd;
+
+    h4{
+        text-align: right;
+    }
+}
+.sidebar-menu{
+    margin-top:20px;
+    list-style: none;
+    padding-left: 20px;
+    li{
+        padding: 10px 0;
+        font-size: 18px;
+    }
+    .link-special{
+        color: red;
+    }
+}
+.section-main{
+    border-bottom: 1px solid #ddd;
+}
+main{
+    h2{
+        margin-bottom: 20px;
+    }
+    table tr td:last-child {
+        white-space: nowrap;
+        width: 1px;
+    }
+    .basket-sum{
+        text-align: right;
+        margin-right: 10px;
+    }
+    hr{
+        margin-top: 0;
+        border-color: #ddd;
+    }
+
+    .form-caption{
+        display:block;
+    }
+    @media (min-width: 768px){
+        #product-price, #product-qty{
+            width: 100px;
+        }
+        .form-group{
+            margin-right: 25px;
+        }
+    }
+    #product-add{
+        margin-top: 24px;
+        margin-bottom: 25px;
+    }
+}
