@@ -145,8 +145,8 @@ module.exports = class Basket {
             this._basketData = [product];
         }else{
             this._basketData.push(product);
-            this._saveDataToStorage();
         }
+        this._saveDataToStorage();
     }
 
     getProductArray(){
