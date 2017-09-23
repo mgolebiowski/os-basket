@@ -49,10 +49,11 @@ module.exports = class View{
         if(!natNum.test(qtyEl.value) || !allNum.test(priceEl.value)) return;
 
         //Creating an object
+        let orderPrice = Number(qtyEl.value)*Number(priceEl.value);
         let product = {
             "name": nameEl.value,
             "qty": qtyEl.value,
-            "price": priceEl.value
+            "price": orderPrice
         };
     
         nameEl.value = "";

@@ -73,8 +73,8 @@ __webpack_require__(1);
 __webpack_require__(2);
 __webpack_require__(3);
 
-const Basket = __webpack_require__(4);
-const View = __webpack_require__(5);
+const Basket = __webpack_require__(15);
+const View = __webpack_require__(16);
 window.onload  = function(){
     window.basket = new Basket();
     window.basketView = new View(document.querySelector("#product-add"), 
@@ -111,7 +111,18 @@ window.onload  = function(){
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 4 */
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = class Basket {
@@ -168,7 +179,7 @@ module.exports = class Basket {
 }
 
 /***/ }),
-/* 5 */
+/* 16 */
 /***/ (function(module, exports) {
 
 
@@ -222,10 +233,11 @@ module.exports = class View{
         if(!natNum.test(qtyEl.value) || !allNum.test(priceEl.value)) return;
 
         //Creating an object
+        let orderPrice = Number(qtyEl.value)*Number(priceEl.value);
         let product = {
             "name": nameEl.value,
             "qty": qtyEl.value,
-            "price": priceEl.value
+            "price": orderPrice
         };
     
         nameEl.value = "";
