@@ -74,60 +74,23 @@ __webpack_require__(2);
 __webpack_require__(3);
 
 const Basket = __webpack_require__(4);
+const View = __webpack_require__(5);
 window.onload  = function(){
     window.basket = new Basket();
-
-    document.querySelector("#backet-pcs").innerHTML = basket.allPcs;
-    document.querySelector("#basket-price").innerHTML = basket.allPrice;
-    document.querySelector("#basket-sum-value").innerHTML = basket.allPrice;
-
-    if(basket.getProductArray()){
-        basket.getProductArray().forEach((product)=>{
-            addNewRow(product);
-        });
-    }
-
+    window.basketView = new View(document.querySelector("#product-add"), 
+                           document.querySelector("#backet-pcs"),
+                           document.querySelector("#basket-price"),
+                           document.querySelector("#basket-sum-value"),
+                           document.querySelector("#product-name"),
+                           document.querySelector("#product-qty"),
+                           document.querySelector("#product-price"),
+                           document.querySelector("#basket-table")
+                          );
+    
+    document.querySelector("#product-add").addEventListener("click", window.basketView.buttonClick.bind(basketView));       
 };
 
-document.querySelector("#product-add").addEventListener("click", (event) => {
-    event.preventDefault();
 
-    let nameEl = document.querySelector("#product-name");
-    let qtyEl = document.querySelector("#product-qty");
-    let priceEl = document.querySelector("#product-price");
-
-    if(!nameEl.value || !qtyEl.value || !priceEl.value) return;
-
-    //Creating an object
-    let product = {
-        "name": nameEl.value,
-        "qty": qtyEl.value,
-        "price": priceEl.value
-    };
-
-    nameEl.value = "";
-    qtyEl.value = "";
-    priceEl.value = "";
-
-    basket.addProductToBasket(product);
-    addNewRow(product);
-    basket.sumAllProducts();
-
-    document.querySelector("#backet-pcs").innerHTML = basket.allPcs;
-    document.querySelector("#basket-price").innerHTML = basket.allPrice;
-    document.querySelector("#basket-sum-value").innerHTML = basket.allPrice;
-});
-
-function addNewRow(product){
-    let table = document.querySelector("#basket-table");
-    let row = table.insertRow();
-    let nameCell = row.insertCell(0);
-        nameCell.innerHTML = product.name;
-    let qtyCell = row.insertCell(1);
-        qtyCell.innerHTML = product.qty+" pcs";
-    let priceCell = row.insertCell(2);
-        priceCell.innerHTML = product.price+"$";
-}
 
 /***/ }),
 /* 1 */
@@ -202,6 +165,81 @@ module.exports = class Basket {
         }
     }
 
+}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+
+
+module.exports = class View{
+
+    constructor(buttonEl, basketPcsEl, basketPriceEl, basketSumEl, formNameEl, formQtyEl, formPriceEl, tabelEl){
+        this._btnEl = buttonEl;
+        this._bskPcsEl = basketPcsEl;
+        this._bskPriceEl = basketPriceEl;
+        this._bskSumEl = basketSumEl;
+        this._frmNameEl = formNameEl;
+        this._frmQtyEl = formQtyEl;
+        this._frmPrcEl = formPriceEl;
+        this._tblEl = tabelEl;
+
+        this._bskPcsEl.innerHTML = basket.allPcs;
+        this._bskPriceEl.innerHTML = basket.allPrice;
+        this._bskSumEl.innerHTML = basket.allPrice;
+    
+        if(basket.getProductArray()){
+            basket.getProductArray().forEach((product)=>{
+                this.addNewRow(product);
+            });
+        }
+    }
+
+    addNewRow(product){
+        let table = this._tblEl;
+        let row = table.insertRow();
+        let nameCell = row.insertCell(0);
+            nameCell.innerHTML = product.name;
+        let qtyCell = row.insertCell(1);
+            qtyCell.innerHTML = product.qty+" pcs";
+        let priceCell = row.insertCell(2);
+            priceCell.innerHTML = product.price+"$";
+    }
+
+    buttonClick(event){
+        event.preventDefault();
+        
+        let nameEl = this._frmNameEl;
+        let qtyEl = this._frmQtyEl;
+        let priceEl = this._frmPrcEl;
+    
+        // Empty inputs
+        if(!nameEl.value || !qtyEl.value || !priceEl.value) return;
+        // Only numerical in qty and price
+        let natNum = new RegExp(/^[0-9]+$/);
+        let allNum = new RegExp(/^[0-9\.]+$/);
+        if(!natNum.test(qtyEl.value) || !allNum.test(priceEl.value)) return;
+
+        //Creating an object
+        let product = {
+            "name": nameEl.value,
+            "qty": qtyEl.value,
+            "price": priceEl.value
+        };
+    
+        nameEl.value = "";
+        qtyEl.value = "";
+        priceEl.value = "";
+    
+        basket.addProductToBasket(product);
+        this.addNewRow(product);
+        basket.sumAllProducts();
+    
+        this._bskPcsEl.innerHTML = basket.allPcs;
+        this._bskPriceEl.innerHTML = basket.allPrice;
+        this._bskSumEl.innerHTML = basket.allPrice;
+    }
 }
 
 /***/ })
